@@ -1,0 +1,7 @@
+{
+  "name": "QR Code Attendance System",
+  "description": "A digital attendance tracking system for university events using QR codes. It allows for participant registration, QR code generation, scanning at multiple checkpoints, and provides a summary report.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
