@@ -1,6 +1,6 @@
 {
   "name": "qr-code-attendance-system",
-  "homepage": "https://Ouerha.github.io/qr-code-attendance-system",
+  "homepage": "https://Ouerha.io/Event-Attendance-System ",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "html5-qrcode": "^2.3.8",

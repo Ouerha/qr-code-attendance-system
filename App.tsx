@@ -1,62 +1,63 @@
+
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import { EventProvider } from './components/EventContext';
-import { AuthProvider } from './context/AuthContext';
-import { NotificationProvider } from './context/NotificationContext';
-import { ChatProvider } from './context/ChatContext';
-
-import ProtectedRoute from './components/ProtectedRoute';
-import MainLayout from './components/MainLayout';
-
-import LoginPage from './pages/LoginPage';
-import DashboardPage from './pages/DashboardPage';
+import { HashRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { AttendanceProvider } from './context/AttendanceContext';
 import RegistrationPage from './pages/RegistrationPage';
 import ScannerPage from './pages/ScannerPage';
 import SummaryPage from './pages/SummaryPage';
-import ManageCheckpointsPage from './pages/ManageCheckpointsPage';
-import ManageAccountsPage from './pages/ManageAccountsPage';
-import ProfilePage from './pages/ProfilePage';
-import DirectorDashboardPage from './components/DirectorDashboardPage';
-import ManageEventsPage from './components/ManageEventsPage';
-import SelectEventPage from './components/SelectEventPage';
-import EventDashboardPage from './pages/EventDashboardPage';
-import InvitationPage from './pages/InvitationPage';
-import ManageRolesPage from './pages/ManageRolesPage';
-import CommunicationPage from './pages/CommunicationPage';
+import { UserPlus, QrCode, ClipboardList, BookOpen } from 'lucide-react';
 
 const App: React.FC = () => {
+  const NavButton = ({ to, icon, label }: { to: string, icon: React.ReactNode, label: string }) => (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `flex flex-col sm:flex-row items-center justify-center sm:justify-start gap-2 px-4 py-3 text-sm font-medium rounded-lg transition-colors duration-200 ${
+          isActive ? 'bg-brand-primary text-white shadow-lg' : 'text-gray-600 hover:bg-brand-light hover:text-brand-dark'
+        }`
+      }
+    >
+      {icon}
+      <span className="mt-1 sm:mt-0">{label}</span>
+    </NavLink>
+  );
+
   return (
-    <AuthProvider>
-      <NotificationProvider>
-        <ChatProvider>
-          <EventProvider>
-            <HashRouter>
+    <AttendanceProvider>
+      <HashRouter>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+          <header className="bg-white shadow-md w-full p-4">
+            <div className="max-w-6xl mx-auto flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <BookOpen className="h-8 w-8 text-brand-primary" />
+                <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+                  Event Attendance System
+                </h1>
+              </div>
+            </div>
+          </header>
+
+          <div className="flex-grow max-w-6xl w-full mx-auto p-4 flex flex-col md:flex-row gap-6">
+            <aside className="md:w-64 flex-shrink-0">
+              <nav className="sticky top-4 bg-white p-4 rounded-xl shadow-md">
+                <ul className="flex flex-row md:flex-col justify-around md:justify-start gap-2">
+                  <li><NavButton to="/" icon={<UserPlus size={20} />} label="Register" /></li>
+                  <li><NavButton to="/scan" icon={<QrCode size={20} />} label="Scan" /></li>
+                  <li><NavButton to="/summary" icon={<ClipboardList size={20} />} label="Summary" /></li>
+                </ul>
+              </nav>
+            </aside>
+            <main className="flex-grow bg-white p-6 rounded-xl shadow-md overflow-auto">
               <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/invitation/:eventId/:participantId" element={<InvitationPage />} />
-                <Route element={<ProtectedRoute />}>
-                  <Route element={<MainLayout />}>
-                    <Route path="/" element={<DashboardPage />} />
-                    <Route path="/register" element={<RegistrationPage />} />
-                    <Route path="/scan" element={<ScannerPage />} />
-                    <Route path="/summary" element={<SummaryPage />} />
-                    <Route path="/manage-checkpoints" element={<ManageCheckpointsPage />} />
-                    <Route path="/manage-accounts" element={<ManageAccountsPage />} />
-                    <Route path="/manage-roles" element={<ManageRolesPage />} />
-                    <Route path="/communication" element={<CommunicationPage />} />
-                    <Route path="/profile" element={<ProfilePage />} />
-                    <Route path="/director-dashboard" element={<DirectorDashboardPage />} />
-                    <Route path="/manage-events" element={<ManageEventsPage />} />
-                    <Route path="/select-event" element={<SelectEventPage />} />
-                    <Route path="/event/:eventId/dashboard" element={<EventDashboardPage />} />
-                  </Route>
-                </Route>
+                <Route path="/" element={<RegistrationPage />} />
+                <Route path="/scan" element={<ScannerPage />} />
+                <Route path="/summary" element={<SummaryPage />} />
               </Routes>
-            </HashRouter>
-          </EventProvider>
-        </ChatProvider>
-      </NotificationProvider>
-    </AuthProvider>
+            </main>
+          </div>
+        </div>
+      </HashRouter>
+    </AttendanceProvider>
   );
 };
 
